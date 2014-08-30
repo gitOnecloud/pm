@@ -1,0 +1,181 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+<title>测试</title>
+<script type="text/javascript" src="script/jquery.min.js"></script>
+<script type="text/javascript" src="script/baodian/util/rsa-encode.js"></script>
+<script type="text/javascript" src="script/jquery/jquery.encoding.digests.sha1.js"></script>
+<script type="text/javascript">
+function index_each(data) {
+	var str = "";
+	$.each(data, function(k, v) {
+		str = str + k + " " + v + "\n";
+	});
+	alert(str);
+}
+var clientUrl = 'http://192.168.1.118:8080/sshdemo/j_spring_cas_security_check';
+var serverUrl = 'http://192.168.10.118:8081/cas/login';   
+$(function() {
+	$("body").ajaxError(function(event,xhr,opt,exc) {
+		alert("系统错误=>" + opt.url + ": " + xhr.status + " " + xhr.statusText + " / " + exc, 5);
+		//index_mess("系统错误，请刷新或者联系管理员！", 5);
+	});
+	serverCheck();
+});
+function serverCheck() {
+	var params = {};
+	params.j_ajax_check = true;
+	params.service = clientUrl;
+	$.ajax({
+		url: serverUrl,
+		data: params,
+		dataType: 'jsonp',
+		success: function(data) {
+			if(data.login == false) {
+				$('#serverCheck').html(data.mess);
+				return;
+			}
+			$('#serverCheck').html(data.userName + ' ' + data.mess);
+		}
+	});
+}
+/**
+ * 服务器端登录，先取得公钥，然后再验证账号密码
+ */
+function serverLogin() {
+	var params = {};
+	params.j_ajax = true;
+	params.renew = true;//强制为重新登录
+	params.service = clientUrl;
+	$.ajax({
+		url: serverUrl,
+		//async: false,
+		//cache: false,
+		//type: 'post',
+		data: params,
+		dataType: 'jsonp',
+		//jsonpCallback:"success_jsonpCallback",
+		//success_jsonpCallback({name:"John"});
+		success: function(data) {
+			//index_each(data);
+			params = {};
+			params.execution = data.execution;
+			params.lt = data.lt;
+			//params.submit = "登录";
+			params._eventId = 'submit';
+			params.j_ajax = true;
+			params.renew = true;
+			//rsa加密
+			var rsa = new RSAKey();
+			rsa.setPublic(data.rsa_modKey, data.rsa_pubKey);
+			var username = $('#name').val();
+			username = username.toLowerCase();
+			var password = $('#pass').val();
+			password = $.encoding.digests.hexSha1Str(username + password);
+			params.username = username;
+			params.password = rsa.encrypt(password);
+			$.ajax({
+				url: serverUrl,
+				data: params,
+				dataType: 'jsonp',
+				success: function(data) {
+					//index_each(data);
+					if(data.status == 1) {
+						$('#loginMess').html('服务端登录失败: ' + data.mess);
+						return;
+					}
+					clientCheck(data.clientUrl);
+				}
+			});
+		}
+	});
+}
+/**
+ * 客户端退出，但服务器端未退出，对客户端进行重新验证
+ * @param needAdd 需要注册
+ */
+function clientLogin(needAdd) {
+	var user = null;
+	if(needAdd) {
+		user = {};
+		user.name = $('#uname').val();
+		user.depm = $('#udepm').val();
+	}
+	var params = {};
+	params.j_ajax = true;
+	params.j_ajax_validate = true;
+	params.service = clientUrl;
+	$.ajax({
+		url: serverUrl,
+		data: params,
+		dataType: 'jsonp',
+		success: function(data) {
+			if(data.clientUrl != null) {
+				clientCheck(data.clientUrl, user, needAdd);
+				return;
+			}
+			$('#loginMess').html('服务器端已退出！');
+		}
+	});
+}
+/**
+ * 客户端验证登录
+ */
+function clientCheck(clientUrl, user, needAdd) {
+	$.ajax({
+		url: clientUrl + '&j_ajax=true',
+		data: user,
+		type: 'post',
+		async: false,
+		cache: false,
+		dataType: 'json',
+		success: function(data) {
+			if(data.status == 1) {
+				$('#loginMess').html('客户端登录失败: ' + data.mess);
+				return;
+			}
+			if(needAdd) {//注册
+				if(data.login == false) {
+					$('#loginMess').html('客户端注册失败: ' + data.mess);
+					return;
+				}
+			} else {//登录
+				if(data.login == false) {
+					$('#loginMess').html('客户端未注册: ' + data.mess);
+					return;
+				}
+			}
+			$('#loginMess').html('登录成功: ' + data.name);
+			//index_each(data);
+		}
+	});
+}
+function jump() {
+	var index_noUserUrl = '/util_selfReg_rd.action';
+	window.open(index_noUserUrl.substring(1));
+}
+</script>
+</head>
+<body>
+<a href="javascript:;" onclick="serverCheck()">检测状态</a>:
+<span id="serverCheck"></span><br /><br />
+
+name <input id='name'><br />
+pass <input id='pass'><br /><br />
+
+<a href="javascript:;" onclick="serverLogin()">未登录 正常登录</a><br /><br />
+
+<a href="javascript:;" onclick="clientLogin()">已登录 进行验证</a><br />
+
+<a href="javascript:;" onclick="serverLogin()">已登录 重新登录</a><br /><br />
+
+姓名 <input id='uname'><br />
+部门 <input id='udepm'><br /><br />
+<a href="javascript:;" onclick="clientLogin(true)">服务端存在 客户进行注册</a><br /><br />
+
+登录结果： <span id="loginMess"></span><br /><br />
+
+<a href="javascript:;" onclick="jump()">跳转</a><br /><br />
+
+</body>

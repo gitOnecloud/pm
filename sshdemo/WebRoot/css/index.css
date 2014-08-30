@@ -1,0 +1,668 @@
+* {
+	margin: 0;
+	padding: 0
+}
+body {
+	font-family: helvetica,tahoma,verdana,sans-serif;
+}
+input {
+	outline: none;
+}
+a {
+	color: blue;
+}
+.hidden {
+	display: none;
+}
+div.easyui-tabs div.tabs-panels div.panel {
+	padding: 0 5px;
+}
+.index_prompt {
+	font-size: 12px;
+	background-color: #F9EDBE;/* 蓝#D6E9F8 */
+    border-color: #F0C36D; /* 蓝#4D90F0 */
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    color: #333333;
+    display: inline-block;
+    font-weight: bold;
+    height: 14px;
+    left: 56%;
+    overflow: hidden;
+    padding: 6px 16px;
+    position: fixed;
+    top: 0;
+    transition: opacity 0.218s ease 0s;
+    z-index: 10000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+/* 菜单 */
+#index_treeDemo {padding: 0 0 20px 0;}
+#index_treeDemo li ul{margin:0; padding:0}
+#index_treeDemo li {line-height:30px;}
+#index_treeDemo li a {
+	color: #003399;
+	width: 151px;
+	height: 30px;
+	padding: 0 0 0 3px;
+}
+#index_treeDemo li a:hover {text-decoration:none; background-color:#EEEEFF;}
+#index_treeDemo li a span.button.switch {visibility: hidden;margin-right: 4px;}
+#index_treeDemo.showIcon li a span.button.switch {visibility: visible;}
+#index_treeDemo li a.curSelectedNode {
+	background-color: #EEEEFF;
+	border-color: #DD4B39;
+	border-style: none none none solid;
+	border-width: 0 0 0 3px;
+	height: 30px;
+	opacity: 1;
+	padding-left: 0;
+}
+#index_treeDemo li span {line-height:30px;}
+#index_treeDemo li span.button {margin-top: -7px;}
+#index_treeDemo li span.button.switch {width: 16px;height: 16px;}
+
+#index_treeDemo li a.level0 span {font-size: 14px;font-weight: bold;}
+#index_treeDemo li span.button.noline_docu {background: none repeat scroll 0 0 transparent;}
+#index_treeDemo li span.button {
+	background-image:url("../script/ztree/css/img/left_menu.png");
+	*background-image:url("../script/ztree/css/img/left_menuForOutLook.gif")
+}
+#index_treeDemo li span.button.switch.level0 {width: 20px; height:20px}
+#index_treeDemo li span.button.switch.level1 {width: 16px; height:16px}
+#index_treeDemo li span.button.noline_open {background-position: -2px 1px;}
+#index_treeDemo li span.button.noline_close {background-position: -21px 1px;}
+#index_treeDemo li span.button.noline_open.level0 {background-position: 0 -16px;}
+#index_treeDemo li span.button.noline_close.level0 {background-position: -18px -16px;}
+
+.demo-info{
+	background:#FFFEE6;
+	color:#8F5700;
+	padding:12px;
+	white-space: nowrap;
+}
+.demo-tip{
+	width:24px;
+	height:16px;
+	float:left;
+}
+/* 用户列表 设备记录 */
+.usli_item {
+	display: inline-block;
+	vertical-align: middle;
+}
+span.usli_item {
+	padding: 2px 0 2px 5px;
+}
+.usli_ftitle {
+	font-size:14px;
+	font-weight:bold;
+	color:#666;
+	padding:5px 0;
+	margin-bottom:10px;
+	border-bottom:1px solid #ccc;
+}
+.fitem {
+	padding-bottom: 5px;
+}
+.usli_fitem {
+	padding-bottom: 5px;
+}
+.usli_fitem label {
+	padding-right: 6px;
+}
+.usli_fitem input {
+	height: 18px;
+    line-height: 18px;
+    vertical-align: middle;
+    width:150px
+}
+/* 交接班按钮 */
+.t-list {
+    padding-bottom: 5px;
+}
+.t-list div {
+	padding: 5px;
+}
+/* 日历框 */
+.index_cald {
+	background: none repeat scroll 0 0 #FFFFFF;
+	padding-top: 10px;
+	margin-bottom:10px;
+}
+#index_cc {
+	text-align: center;
+	margin:0 auto;
+}
+/* 值班表 */
+.index_clda {
+	background: none repeat scroll 0 0 #FFFFFF;
+	font-size: 13px;
+	position: relative;
+	white-space: nowrap;
+	margin-bottom:10px;
+}
+.index_duty {
+	left: 10px;
+	position: absolute;
+	top: 15px;
+	width: 70px;
+}
+.index_dtus {
+	left: 80px;
+	position: absolute;
+	top: 15px;
+}
+.index_dta {
+	background: none repeat scroll 0 0 #ECECEC;
+	padding: 3px;
+}
+.index_dtb {
+	padding: 3px;
+}
+.index_dtc {
+	color: #003399;
+	padding-right: 6px;
+}
+.index_dtd {
+	padding-right: 6px;
+}
+/* 当值人员*/
+.index_duty_officer {
+	padding: 3px 3px 3px 22px;
+	color: #003399;
+}
+/* 个人工作框 */
+.index_work {
+	background: none repeat scroll 0 0 #FFFFFF;
+	padding: 5px 5px 5px 25px;
+	margin-bottom:10px;
+	white-space: nowrap;
+}
+/* 新闻框 */
+.index_pgrid {
+	background: none repeat scroll 0 0 #FFFFFF;
+	font-family: "Consolas","Courier New",Courier,mono;
+	margin-bottom: 10px;
+	overflow: hidden;
+	padding: 8px;
+}
+/* 新闻列表 */
+.index_news {
+	font-size: 14px;
+	overflow: hidden;
+	padding: 0 0 5px;
+	position: relative;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.index_news a, .index_news span.idnews_content {
+	color: #003399;
+	padding-left: 80px;
+	text-decoration: none;
+}
+.index_news span.idnews_date {
+	position: absolute;
+}
+.index_news a:hover {
+	text-decoration: underline;
+}
+/* 倒班管理 */
+.dtli_top {
+	margin: 8px 0 15px 60px;
+}
+.dtli_body {
+	position: relative;
+}
+.dtli_left {
+	width: 360px;
+	position: relative;
+}
+.dtli_a {
+	padding-left: 60px;
+    position: relative;
+}
+.dtli_b {
+	left: 20px;
+    position: absolute;
+    top: 8px;
+}
+.dtli_dpm {
+	border: 1px solid #FFFFFF;
+	padding: 8px 5px 0;
+	min-height: 23px;
+	cursor: pointer;
+}
+.dtli_c {
+	border-color: #3366CC;
+	background: #EEEEFF;
+}
+.dtli_dpm div {
+	display: inline-block;
+	padding: 0 12px 8px 0;
+}
+.dtli_right {
+	position: absolute;
+	left: 360px;
+	top: 0;
+	border-left: 1px solid #C2D5E3;
+	padding: 0 20px 20px;
+}
+.dtli_ra {
+	white-space: nowrap;
+	padding: 4px 0;
+    position: relative;
+}
+.dtli_ra span {
+	margin-right: 4px;
+}
+.dtli_rb {
+    position: relative;
+}
+/* 设备列表的textarea */
+.gdli_tt {
+	font-size: 12px;
+	height: 64px;
+	margin-top: 6px;
+	overflow: auto;
+	width: 320px;
+}
+.gdli_fitem {
+	padding-bottom: 6px;
+}
+.gdli_fitem input, .gdli_input input, .auli_input input {
+	height: 20px;
+	line-height: 20px;
+	width: 180px;
+}
+/* 文档浏览 */
+.docrd_head {
+	background-color: #FFFEE6;
+	border-bottom: 3px solid #C5D2DA;
+	padding: 8px 12px;
+	height: 37px;
+}
+.docrd_head div {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.docrd_head .docrd_title {
+	color: #222222;
+	font-size: 14px;
+	font-weight: bold;
+}
+.docrd_head .docrd_user {
+	color: #8F5700;
+	padding-top: 5px;
+}
+.docrd_body {
+	height: 100%;
+	position: relative;
+}
+.docrd_iframe {
+	bottom: 5px;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 56px;
+}
+.docrd_if {
+	border: 0 none;
+	height: 100%;
+	width: 100%;
+}
+/* 添加文档 */
+.docadd_input {
+    margin-top: 8px;
+    white-space: nowrap;
+}
+.docadd_input input {
+	height: 20px;
+	line-height: 20px;
+	width: 320px;
+}
+/* esayui 图标 */
+.eu-folder-open {
+	background:url('../script/easyui/themes/default/images/tree_folder_open.gif') no-repeat;
+}
+/* 角色权限 */
+.auro_body {
+	position: absolute;
+	top: 70px;
+	bottom: 0;
+}
+.auro_choose {
+	left: 50px;
+	position: absolute;
+	top: 10px;
+	width: 260px;
+}
+.auro_change {
+	left: 400px;
+	position: absolute;
+	top: 5px;
+	width: 260px;
+}
+.auro_aTree {
+	border: 1px solid #C0C0C0;
+	bottom: 15px;
+	left: 50px;
+	overflow: auto;
+	position: absolute;
+	top: 36px;
+	width: 260px;
+}
+.auro_rTree {
+	left: 400px;
+}
+.auro_center {
+	left: 330px;
+	position: absolute;
+	top: 40%;
+	width: 60px;
+}
+/* 运行记录 add notepad */
+.wrli_addnp {
+	padding-left: 125px;
+}
+.wrli_addnp input, .index_addnp input{
+	margin-right: 3px;
+	vertical-align: middle;
+}
+.wrli_addnp label, .index_addnp label {
+	color: #8F5700;
+	width: 100px;
+}
+.index_addnp {
+	margin-top: 8px;
+}
+/* 文件管理 */
+.img-file {
+	white-space: nowrap;
+	vertical-align: top;
+	display: inline-block;
+}
+.ico-file {
+    background-image: url("../images/file.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+}
+.ico-bfile {
+    background-image: url("../images/file.png");
+    background-position: 0 -64px;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+}
+.ico-file-xls, .ico-file-xlsx, .ico-file-et, .ico-file-2 {
+    background-position: -32px 0;
+}
+.ico-bfile-xls, .ico-bfile-xlsx, .ico-bfile-et, .ico-bfile-2 {
+    background-position: -32px -64px;
+}
+.ico-file-doc, .ico-file-docx, .ico-file-wps, .ico-file-3 {
+    background-position: -64px 0;
+}
+.ico-bfile-doc, .ico-bfile-docx, .ico-bfile-wps, .ico-bfile-3 {
+    background-position: -64px -64px;
+}
+.ico-file-ppt, .ico-file-pptx, .ico-file-dps, .ico-file-4 {
+    background-position: -96px 0;
+}
+.ico-bfile-ppt, .ico-bfile-pptx, .ico-bfile-dps, .ico-bfile-4 {
+    background-position: -96px -64px;
+}
+.ico-file-7z, .ico-file-5 {
+    background-position: -128px 0;
+}
+.ico-bfile-7z, .ico-bfile-5 {
+    background-position: -128px -64px;
+}
+.ico-file-rar, .ico-file-zip, .ico-file-gz, .ico-file-bz2, .ico-file-6 {
+    background-position: -160px 0;
+}
+.ico-bfile-rar, .ico-bfile-zip, .ico-bfile-gz, .ico-bfile-bz2, .ico-bfile-6 {
+    background-position: -160px -64px;
+}
+.ico-file-7 {
+    background-position: -192px 0;
+}
+.ico-bfile-7 {
+    background-position: -192px -64px;
+}
+.ico-file-iso, .ico-file-8 {
+    background-position: -224px 0;
+}
+.ico-bfile-iso, .ico-bfile-8 {
+    background-position: -224px -64px;
+}
+.ico-file-9 {
+    background-position: -256px 0;
+}
+.ico-bfile-9 {
+    background-position: -256px -64px;
+}
+.ico-file-htm, .ico-file-html, .ico-file-10 {
+    background-position: -288px 0;
+}
+.ico-bfile-htm, .ico-bfile-html, .ico-bfile-10 {
+    background-position: -288px -64px;
+}
+.ico-file-js, .ico-file-11 {
+    background-position: -320px 0;
+}
+.ico-bfile-js, .ico-bfile-11 {
+    background-position: -320px -64px;
+}
+.ico-file-ini, .ico-file-xml, .ico-file-css, .ico-file-12 {
+    background-position: -352px 0;
+}
+.ico-bfile-ini, .ico-bfile-xml, .ico-bfile-css, .ico-bfile-12 {
+    background-position: -352px -64px;
+}
+.ico-file-13 {
+    background-position: -384px 0;
+}
+.ico-bfile-13 {
+    background-position: -384px -64px;
+}
+.ico-file-exe, .ico-file-14 {
+    background-position: -416px 0;
+}
+.ico-bfile-exe, .ico-bfile-14 {
+    background-position: -416px -64px;
+}
+.ico-file-15 {
+    background-position: -448px 0;
+}
+.ico-bfile-15 {
+    background-position: -448px -64px;
+}
+.ico-file-font, .ico-file-16 {
+    background-position: -480px 0;
+}
+.ico-bfile-font,.ico-bfile-16 {
+    background-position: -480px -64px;
+}
+.ico-file-pdf, .ico-file-17 {
+    background-position: -512px 0;
+}
+.ico-bfile-pdf, .ico-bfile-17 {
+    background-position: -512px -64px;
+}
+.ico-file-psd, .ico-file-psb, .ico-file-18 {
+    background-position: -544px 0;
+}
+.ico-bfile-psd, .ico-bfile-psb, .ico-bfile-18 {
+    background-position: -544px -64px;
+}
+.ico-file-ai, .ico-file-19 {
+    background-position: -576px 0;
+}
+.ico-bfile-ai, .ico-bfile-19 {
+    background-position: -576px -64px;
+}
+.ico-file-fla, .ico-file-20 {
+    background-position: -608px 0;
+}
+.ico-bfile-fla, .ico-bfile-20 {
+    background-position: -608px -64px;
+}
+.ico-file-swf, .ico-file-21 {
+    background-position: -640px 0;
+}
+.ico-bfile-swf, .ico-bfile-21 {
+    background-position: -640px -64px;
+}
+.ico-file-txt, .ico-file-22 {
+    background-position: -672px 0;
+}
+.ico-bfile-txt, .ico-bfile-22 {
+    background-position: -672px -64px;
+}
+.ico-file-php, .ico-file-jsp, .ico-file-asp, .ico-file-23 {
+    background-position: -704px 0;
+}
+.ico-bfile-php, .ico-bfile-jsp, .ico-bfile-asp, .ico-bfile-23 {
+    background-position: -704px -64px;
+}
+.ico-file-reg, .ico-file-24 {
+    background-position: -736px 0;
+}
+.ico-bfile-reg, ico-bfile-24 {
+    background-position: -736px -64px;
+}
+.ico-file-rm, .ico-file-rmvb, .ico-file-ra, .ico-file-rmx, .ico-file-25 {
+    background-position: -768px 0;
+}
+.ico-bfile-rm, .ico-bfile-rmvb, .ico-bfile-ra, .ico-bfile-rmx, .ico-bfile-25 {
+    background-position: -768px -64px;
+}
+.ico-file-mpg, .ico-file-mpeg, .ico-file-dat, .ico-file-avi, .ico-file-asf, .ico-file-wmv, .ico-file-mp4, .ico-file-26 {
+    background-position: -800px 0;
+}
+.ico-bfile-mpg, .ico-bfile-mpeg, .ico-bfile-dat, .ico-bfile-avi, .ico-bfile-asf, .ico-bfile-wmv, .ico-bfile-mp4, .ico-bfile-26 {
+    background-position: -800px -64px;
+}
+.ico-file-mov, .ico-file-aiff,  .ico-file-27 {
+    background-position: -832px 0;
+}
+.ico-bfile-mov, .ico-bfile-aiff, .ico-bfile-27 {
+    background-position: -832px -64px;
+}
+.ico-file-navi, .ico-file-3gp, .ico-file-mkv, .ico-file-flv, .ico-file-f4v, .ico-file-28 {
+    background-position: -864px 0;
+}
+.ico-bfile-navi, .ico-bfile-3gp, .ico-bfile-mkv, .ico-bfile-flv, .ico-bfile-f4v, .ico-bfile-28 {
+    background-position: -864px -64px;
+}
+.ico-file-cda, .ico-file-wav, .ico-file-au, .ico-file-midi, .ico-file-wma, .ico-file-vqf, .ico-file-ogg, .ico-file-amr, .ico-file-mp3, .ico-file-29 {
+    background-position: -896px 0;
+}
+.ico-bfile-cda, .ico-bfile-wav, .ico-bfile-au, .ico-bfile-midi, .ico-bfile-wma, .ico-bfile-vqf, .ico-bfile-ogg, .ico-bfile-amr, .ico-bfile-mp3, .ico-bfile-29 {
+    background-position: -896px -64px;
+}
+.ico-file-jpg, .ico-file-jpeg, .ico-file-31 {
+    background-position: 0 -32px;
+}
+.ico-bfile-jpg, .ico-bfile-jpeg, .ico-bfile-31 {
+    background-position: 0 -96px;
+}
+.ico-file-gif, .ico-file-32 {
+    background-position: -32px -32px;
+}
+.ico-bfile-gif, .ico-bfile-32 {
+    background-position: -32px -96px;
+}
+.ico-file-png, .ico-file-33 {
+    background-position: -64px -32px;
+}
+.ico-bfile-png, .ico-bfile-33 {
+    background-position: -64px -96px;
+}
+.ico-file-bmp, .ico-file-34 {
+    background-position: -96px -32px;
+}
+.ico-bfile-bmp, .ico-bfile-34 {
+    background-position: -96px -96px;
+}
+.ico-file-tif, .ico-file-35 {
+    background-position: -128px -32px;
+}
+.ico-bfile-tif, .ico-bfile-35 {
+    background-position: -128px -96px;
+}
+.ico-file-emf, .ico-file-36 {
+    background-position: -160px -32px;
+}
+.ico-bfile-emf, .ico-bfile-36 {
+    background-position: -160px -96px;
+}
+.ico-file-wmf, .ico-file-37 {
+    background-position: -192px -32px;
+}
+.ico-bfile-wmf, .ico-bfile-37 {
+    background-position: -192px -96px;
+}
+.ico-file-ico, .ico-file-38 {
+    background-position: -224px -32px;
+}
+.ico-bfile-ico, .ico-bfile-38 {
+    background-position: -224px -96px;
+}
+.ico-file-raw, .ico-file-39 {
+    background-position: -256px -32px;
+}
+.ico-bfile-raw, .ico-bfile-39 {
+    background-position: -256px -96px;
+}
+.ico-file-40 {
+    background-position: -288px -32px;
+}
+.ico-bfile-40 {
+    background-position: -288px -96px;
+}
+.ico-file-dll, .ico-file-bat, .ico-file-41 {
+    background-position: -320px -32px;
+}
+.ico-bfile-dll, .ico-bfile-bat, .ico-bfile-41 {
+    background-position: -320px -96px;
+}
+.ico-file-torrent, .ico-file-42 {
+    background-position: -352px -32px;
+}
+.ico-bfile-torrent, .ico-bfile-42 {
+    background-position: -352px -96px;
+}
+.ico-file-dir {
+    background-position: -384px -32px;
+}
+.ico-bfile-dir {
+    background-position: -384px -96px;
+}
+/* 输入框样式 */
+.index_input200, .index_input160, .index_input60,
+.index_input100, .index_input120 {
+	height: 18px;
+	line-height: 18px;
+	vertical-align: middle;
+}
+.index_input60 {
+	width: 60px;
+}
+.index_input100 {
+	width: 100px;
+}
+.index_input160 {
+	width: 160px;
+}
+.index_input200 {
+	width: 200px;
+}
+.index_input120 {
+	width: 120px;
+}

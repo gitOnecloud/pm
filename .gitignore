@@ -50,3 +50,5 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+cas/WebRoot/WEB-INF/classes/
+sshdemo/WebRoot/WEB-INF/classes/

@@ -1,0 +1,72 @@
+﻿
+org.jasig.cas.web.flow.AuthenticationViaFormAction
+try {
+	WebUtils.putTicketGrantingTicketInRequestScope(context, this.centralAuthenticationService.createTicketGrantingTicket(credentials));
+	return "success";
+} catch (final TicketException e) {
+	//获取exception 提示hasLock
+	return "error";
+}
+
+org.jasig.cas.CentralAuthenticationServiceImpl
+public String createTicketGrantingTicket(final Credentials credentials) throws TicketCreationException {
+	try {
+		final Authentication authentication = this.authenticationManager
+			.authenticate(credentials);
+	} catch (final AuthenticationException e) {
+		//抛出exception
+		throw new TicketCreationException(e);
+	}
+}
+
+org.jasig.cas.authentication.AbstractAuthenticationManager
+public final Authentication authenticate(final Credentials credentials) throws AuthenticationException {
+	final Pair<AuthenticationHandler, Principal> pair = authenticateAndObtainPrincipal(credentials);
+}
+
+org.jasig.cas.authentication.AuthenticationManagerImpl
+protected Pair<AuthenticationHandler, Principal> authenticateAndObtainPrincipal(final Credentials credentials) throws AuthenticationException {
+	for (final AuthenticationHandler authenticationHandler : this.authenticationHandlers) {
+		if (!authenticationHandler.authenticate(credentials)) {
+			log.info("{} failed to authenticate {}", handlerName, credentials);
+		}
+		//修改authenticationHandler 接收其他参数，然后抛出exception
+    }
+	if (!authenticated) {
+		if (foundSupported) {
+			throw BadCredentialsAuthenticationException.ERROR;
+		}
+		throw UnsupportedCredentialsException.ERROR;
+	}
+}
+
+org.jasig.cas.authentication.handler.support.AbstractPreAndPostProcessingAuthenticationHandler
+public final boolean authenticate(final Credentials credentials)
+	throws AuthenticationException {
+	if (!preAuthenticate(credentials)) {
+		return false;
+	}
+	final boolean authenticated = doAuthentication(credentials);
+	return postAuthenticate(credentials, authenticated);
+}
+
+org.jasig.cas.authentication.handler.support.AbstractUsernamePasswordAuthenticationHandler
+protected final boolean doAuthentication(final Credentials credentials)
+	throws AuthenticationException {
+	return authenticateUsernamePasswordInternal((UsernamePasswordCredentials) credentials);
+}
+
+org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler
+//添加方法，返回登录状态
+protected final boolean authenticateUsernamePasswordInternal(final UsernamePasswordCredentials credentials) throws AuthenticationException {
+	try {
+		final String dbPassword = getJdbcTemplate().queryForObject(this.sql, String.class, username);
+		return dbPassword.equals(encryptedPassword);
+	} catch (final IncorrectResultSizeDataAccessException e) {
+		// this means the username was not found.
+		return false;
+	}
+}
+
+
+

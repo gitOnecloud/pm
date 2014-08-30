@@ -1,0 +1,44 @@
+
+
+org.jasig.cas.web.flow.AuthenticationViaFormAction
+public final String submit(final RequestContext context, final Credentials credentials, final MessageContext messageContext) throws Exception {
+	//credentials => org.jasig.cas.authentication.principal.UsernamePasswordCredentials
+	//保存username + password
+	//删除旧的TGT
+	this.centralAuthenticationService.destroyTicketGrantingTicket(ticketGrantingTicketId);
+	
+	//保存ticket granting ticket(TGT)
+	
+	//org.jasig.cas.CentralAuthenticationServiceImpl.centralAuthenticationService
+	//定义在applicationContext.xml
+	
+	//final Authentication authentication = this.authenticationManager.authenticate(credentials);
+	//org.jasig.cas.authentication.AuthenticationManagerImpl
+	//定义在deployerConfigContext.xml
+	//实际上调用AbstractAuthenticationManager..authenticate(credentials)
+	//返回return new ImmutableAuthentication(authentication.getPrincipal(),authentication.getAttributes());
+	//
+	WebUtils.putTicketGrantingTicketInRequestScope(context, this.centralAuthenticationService.createTicketGrantingTicket(credentials));
+	//加到客户端cookie
+	
+	putWarnCookieIfRequestParameterPresent(context);
+}
+
+org.jasig.cas.web.flow.GenerateServiceTicketAction
+protected Event doExecute(final RequestContext context) {
+	try {
+		final String serviceTicketId = this.centralAuthenticationService
+			.grantServiceTicket(ticketGrantingTicket,
+				service);
+		WebUtils.putServiceTicketInRequestScope(context,
+			serviceTicketId);
+		return success();//redirect
+	} catch (final TicketException e) {}
+	//处理记住密码
+	return error();//generateLoginTicket
+}
+//加入p:warnCookieGenerator-ref="warnCookieGenerator
+
+应该在servicAuthorizationCheck拦截才正确
+
+			
