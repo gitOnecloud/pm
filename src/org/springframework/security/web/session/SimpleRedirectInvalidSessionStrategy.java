@@ -9,6 +9,10 @@ import org.springframework.util.Assert;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Performs a redirect to a fixed URL when an invalid requested session is detected by the {@code SessionManagementFilter}.
  *

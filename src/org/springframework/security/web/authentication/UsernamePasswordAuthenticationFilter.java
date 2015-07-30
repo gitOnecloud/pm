@@ -18,6 +18,9 @@ package org.springframework.security.web.authentication;
 
 import java.security.interfaces.RSAPrivateKey;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

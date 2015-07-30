@@ -21,6 +21,9 @@ import com.baodian.util.StaticMethod;
 
 import java.io.Serializable;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 
 /**
  * A holder of selected HTTP details related to a web authentication request.
