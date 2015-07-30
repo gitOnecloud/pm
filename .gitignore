@@ -53,3 +53,6 @@ $RECYCLE.BIN/
 cas/WebRoot/WEB-INF/classes/
 sshdemo/WebRoot/WEB-INF/classes/
 /.classpath
+/.mymetadata
+/.project
+/.settings/
