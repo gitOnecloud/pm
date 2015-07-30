@@ -52,3 +52,4 @@ $RECYCLE.BIN/
 *.msp
 cas/WebRoot/WEB-INF/classes/
 sshdemo/WebRoot/WEB-INF/classes/
+/.classpath
