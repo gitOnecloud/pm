@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    	http://www.springframework.org/schema/security
+    	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<global-method-security pre-post-annotations="enabled" />
+	
+	<!-- 不过滤静态资源，其中/**/代表跨越目录 -->
+	<http pattern="/**/*.html" security="none" />
+	<http pattern="/**/*.jsp" security="none" />
+	<!-- 不过滤图片整个目录下的文件 -->
+	<http pattern="/images/**/*" security="none" />
+	<http pattern="/css/**/*" security="none" />
+	<http pattern="/script/**/*" security="none" />
+
+	<!-- 不过滤特殊访问 -->
+	<http pattern="/*_no.action" security="none" />
+	<http pattern="/*_no_rd.action" security="none" />
+
+	<http auto-config="true" entry-point-ref="casAuthEntryPoint">
+		<access-denied-handler error-page="/message.jsp?json=deny" />
+		<session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+        <custom-filter ref="concurrencyFilter" position="CONCURRENT_SESSION_FILTER" />
+        <!-- <session-management session-fixation-protection="none" /> -->
+		<custom-filter ref="filterInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
+		<custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER" />
+        <custom-filter ref="singleLogoutFilter" before="CAS_FILTER" />
+		<custom-filter ref="casAuthenticationFilter" position="CAS_FILTER"/>
+	</http>
+   
+<!-- session验证策略 -->
+	<beans:bean id="sessionAuthenticationStrategy"
+        class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
+        <beans:constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+		<!-- 同时登陆数 -->
+        <beans:property name="maximumSessions" value="1" />
+    </beans:bean>
+    <!-- 注册session，保存SessionInformation -->
+    <beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+	<!-- 当前登录过滤器 -->
+    <beans:bean id="concurrencyFilter"
+        class="org.springframework.security.web.session.ConcurrentSessionFilter">
+		<beans:property name="sessionRegistry" ref="sessionRegistry" />
+		<!-- <beans:property name="expiredUrl" value="/message.jsp?json=expired" /> -->
+		<beans:property name="expiredUrl" value="${cas.server.expiredUrl}" />
+    </beans:bean>
+
+<!-- 配置自定义的RememberMeServices -->
+	<!-- <beans:bean id="myIpRememberService" class="com.baodian.security.IPTokenBasedRememberMeServices">
+		<beans:property name="key" value="springIpRem"/>
+		<beans:property name="userDetailsService" ref="myUserDetailsService"/>
+	</beans:bean> -->
+
+<!-- 自定义认证过滤器 ,必须包含authenticationManager,accessDecisionManager, securityMetadataSource三个属性，所有的控制将在这三个类中实现 -->
+	<beans:bean id="filterInterceptor" class="com.baodian.security.impl.SecurityFilterImpl">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
+		<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
+	</beans:bean>
+	<!-- 访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源 -->
+	<beans:bean id="accessDecisionManager" class="com.baodian.security.impl.AccessDecisionManagerImpl"/>
+	<!-- 资源与权限定义，建立两者对应关系，即定义某一资源可以被哪些角色访问 -->
+	<beans:bean id="securityMetadataSource" class="com.baodian.security.impl.SecurityMetadataSourceImpl">
+		<!-- 作为构造函数的参数 -->
+		<beans:constructor-arg name="secuManager" ref="secuManager" />
+	</beans:bean>
+
+<!-- cas单点登录 -->
+	<!-- 服务器端登录位置 -->
+	<beans:bean id="casAuthEntryPoint"
+		class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
+		<beans:property name="loginUrl" value="${cas.server.loginUrl}"/>
+		<beans:property name="serviceProperties" ref="casService"/>
+	</beans:bean>
+	<!-- 客户端登录位置 -->
+	<beans:bean id="casService" class="org.springframework.security.cas.ServiceProperties">
+		<beans:property name="service" value="${cas.client.checkUrl}"/>
+	</beans:bean>
+	<!-- 认证过滤器 -->
+	<beans:bean id="casAuthenticationFilter"
+		class="org.springframework.security.cas.web.CasAuthenticationFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager"/>
+		<beans:property name="sessionAuthenticationStrategy" ref="sessionAuthenticationStrategy" />
+        <beans:property name="authenticationSuccessHandler" ref="myAuthSuccHandler" />  
+		<beans:property name="authenticationFailureHandler" ref="myAuthFailHandler" />  
+       <!-- <beans:property name="filterProcessesUrl" value="/j_spring_cas_security_check" /> -->
+	</beans:bean>
+    <!-- 认证成功控制器 -->
+    <beans:bean id="myAuthSuccHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler"></beans:bean>
+	<!-- 认证失败控制器 -->
+    <beans:bean id="myAuthFailHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+        <beans:property name="defaultFailureUrl" value="${cas.defaultFailureUrl}" />
+        <beans:property name="jsonFailureUrl" value="${cas.jsonFailureUrl}" />
+        <beans:property name="noUserFailureUrl" value="${cas.noUserFailureUrl}" />
+        <beans:property name="jsonNoUserFailureUrl" value="${cas.jsonNoUserFailureUrl}" />
+        <beans:property name="lockFailureUrl" value="${cas.lockFailureUrl}" />
+        <beans:property name="jsonLockFailureUrl" value="${cas.jsonLockFailureUrl}" />
+    </beans:bean>
+	<!-- 认证管理器 -->
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider ref="casAuthenticationProvider"/>
+	</authentication-manager>
+	<!-- 认证提供器 -->
+	<beans:bean id="casAuthenticationProvider"
+		class="org.springframework.security.cas.authentication.CasAuthenticationProvider">
+		<beans:property name="ticketValidator" ref="casTicketValidator"/>
+		<beans:property name="serviceProperties" ref="casService"/>
+		<beans:property name="key" value="jbcp-baodian-sshdemo-cas"/>
+		<beans:property name="authenticationUserDetailsService" ref="authenticationUserDetailsService"/>
+	</beans:bean>
+	<!-- 客户端验证ticket -->
+	<beans:bean id="casTicketValidator" class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
+		<beans:constructor-arg value="${cas.server}"/>
+		<beans:constructor-arg value="${cas.server.encode}" />
+	</beans:bean>
+	<!-- 验证成功，读取数据库 -->
+	<beans:bean id="authenticationUserDetailsService"
+		class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+		<beans:property name="userDetailsService" ref="myUserDetailsService"/>
+	</beans:bean>
+	<!-- 1.1读取用户账户密码权限(角色) -->
+	<beans:bean id="myUserDetailsService" class="com.baodian.security.impl.UserDetailsServiceImpl">
+		<beans:property name="userManager" ref="userManager"></beans:property>
+		<beans:property name="userCache" ref="userCache"></beans:property>
+	</beans:bean>
+	<!-- 1.1.1启用用户的缓存功能 -->
+	<beans:bean id="userCache"
+		class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
+		<beans:property name="cache" ref="userEhCache" />
+	</beans:bean>
+	<!-- 1.1.2缓存设置 -->
+	<beans:bean id="userEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<beans:property name="cacheName" value="userCache" />
+		<beans:property name="cacheManager" ref="cacheManager" />
+	</beans:bean>
+	<!-- 1.1.3缓存管理类,可自己定义配置文件(ehcache.xml) -->
+	<beans:bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
+	
+<!-- 注销客户端 -->  
+    <beans:bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter" />
+	<!-- 注销服务器端 -->
+	<beans:bean id="requestSingleLogoutFilter"
+		class="org.springframework.security.web.authentication.logout.LogoutFilter">
+		<beans:constructor-arg value="${cas.server.logoutUrl}" />
+		<beans:constructor-arg>
+			<beans:bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
+		</beans:constructor-arg>
+		<beans:property name="filterProcessesUrl" value="${cas.client.logoutUrl}" />
+	</beans:bean>
+	
+	<!-- 非cas登录时需要的加密器，userManager使用 -->
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.crypto.password.StandardPasswordEncoder" />
+	
+<!-- 监听权限的操作，将错误记录在日志中 -->
+	<beans:bean class="org.springframework.security.authentication.event.LoggerListener" />
+</beans:beans>

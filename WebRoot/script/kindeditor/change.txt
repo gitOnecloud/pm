@@ -1,0 +1,15 @@
+
+kindeditor
+  1.kendeditor-min.js
+	在147行 增加一句代码： 初始化时自动调整高度（用于email_list_rd.js）
+		var b=this,c=b.fullscreenMode;
+		b.options.beforeCreate&&b.options.beforeCreate.call(b);//只增加这一行
+		if(b.isCreated)return b;
+
+  2.filemanager/filemanager.js
+	在75行 参数名'&'更改为'&_'，action接收参数时才不会报错
+	在77行 加上
+		if(data.message) {
+			alert(data.message);
+			return;
+		}
