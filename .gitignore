@@ -51,7 +51,7 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 cas/WebRoot/WEB-INF/classes/
-sshdemo/WebRoot/WEB-INF/classes/
+pm/WebRoot/WEB-INF/classes/
 /.classpath
 /.mymetadata
 /.project

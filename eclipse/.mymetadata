@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="sshdemo"
+  name="pm"
   id="myeclipse.1435393160147"
   j2ee-spec="1.4"
-  archive="sshdemo.war">
+  archive="pm.war">
   <attributes>
     <attribute name="webrootdir" value="WebRoot" />
   </attributes>
