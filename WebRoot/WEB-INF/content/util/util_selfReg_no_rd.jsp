@@ -13,7 +13,7 @@
 <script type="text/javascript" src="script/jquery.min.js"></script>
 <script type="text/javascript" src="script/ztree/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="script/baodian/util/mess.js"></script>
-<script type="text/javascript" src="script/baodian/util/util_selfReg_no_rd.js"></script>
+<script type="text/javascript" src="script/baodian/util/common_selfReg_no_rd.js"></script>
 <link rel="stylesheet" type="text/css" href="script/ztree/css/zTreeStyle.css">
 <style type="text/css">
 body {

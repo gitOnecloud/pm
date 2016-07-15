@@ -22,7 +22,7 @@ public class StaticMethod {
 	public static final String loginError = "{\"status\":1,\"mess\":\"请先登录！\",\"login\":false}";
 	public static final String inputError = "{\"status\":1,\"mess\":\"输入有误！\"}";
 	public static final String addSucc = "{\"status\":0,\"mess\":\"添加成功！\"}";
-	public static final String changeSucc = "{\"status\":0,\"mess\":\"更新成功！\"}";
+	public static final String changeSucc = "{\"status\":0,\"mess\":\"修改成功！\"}";
 	public static final String removeSucc = "{\"status\":0,\"mess\":\"删除成功！\"}";
 	public static final String authError = "{\"status\":1,\"mess\":\"没有权限！\"}";
 	/**
@@ -54,21 +54,36 @@ public class StaticMethod {
 	private static Format dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	/**
 	 * 将时间转换为2013-02-24 22:31:13格式
+	 * @return　失败返回null
 	 */
 	public static String DateToString(Date date) {
-		return timeFormat.format(date);
+		try {
+			return timeFormat.format(date);
+		} catch(Exception e) {
+			return null;
+		}
 	}
 	/**
 	 * 将时间转换为2013-02-24 22:31:13格式
+	 * @return　失败返回null
 	 */
 	public static String LongToDate(long l) {
-		return timeFormat.format(l);
+		try {
+			return timeFormat.format(l);
+		} catch(Exception e) {
+			return null;
+		}
 	}
 	/**
 	 * 将时间转换为2013-02-24格式
+	 * @return　失败返回null
 	 */
 	public static String DateToDay(Date date) {
-		return dateFormat.format(date);
+		try {
+			return dateFormat.format(date);
+		} catch(Exception e) {
+			return null;
+		}
 	}
 	/**
 	 * json字符串返回
@@ -89,10 +104,19 @@ public class StaticMethod {
 		return jsonMess(0, mess);
 	}
 	/**
-	 * 检查字符是否不为空，且长度在min到max之间
+	 * 检查字符是否符合要求；不能为空；长度在min到max之间
+	 * @return 符合返回true
 	 */
 	public static boolean checkStr(String param, int min, int max) {
-		if(param == null) return false;
+		return checkStr(param, min, max, false);
+	}
+	/**
+	 * 检查字符是否符合要求；长度在min到max之间
+	 * @param canBeNull 是否可以为null
+	 * @return 符合返回true
+	 */
+	public static boolean checkStr(String param, int min, int max, boolean canBeNull) {
+		if(!canBeNull && param==null) return false;
 		if(param.length() < min) return false;
 		if(param.length() > max) return false;
 		return true;

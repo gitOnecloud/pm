@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.baodian.action.CommonAction;
+import com.baodian.action.UtilAction;
 import com.baodian.model.role.Role;
 import com.baodian.service.role.AuthorityManager;
 import com.baodian.service.role.RoleManager;
@@ -15,7 +15,7 @@ import com.baodian.util.StaticMethod;
 @SuppressWarnings("serial")
 @Component("role")
 @Scope("prototype")//必须注解为多态
-public class RoleAction extends CommonAction {
+public class RoleAction extends UtilAction {
 //依赖注入	
 	@Resource(name="roleManager")
 	private RoleManager roleManager;

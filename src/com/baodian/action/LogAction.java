@@ -16,7 +16,7 @@ import com.baodian.util.page.LogPage;
 @SuppressWarnings("serial")
 @Component("log")
 @Scope("prototype")//必须注解为多态
-public class LogAction extends CommonAction {
+public class LogAction extends UtilAction {
 
 	@Resource(name="logManager")
 	private LogManager lm;

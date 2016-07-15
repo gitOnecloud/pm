@@ -68,7 +68,7 @@ function loaded() {
 %>
 <span class="jump"><b id="jumpsecond">5</b> 秒后跳转到<a href="index_rd.action">首页</a></span>
 <img border="0" src="script/kindeditor/plugins/emoticons/images/0.gif" alt="">
-<a href="util_login_no_rd.action">重新登录</a>
+<a href="common_login_no_rd.action">重新登录</a>
 <a href="j_spring_security_logout">退出</a>
 </div>
 </body>

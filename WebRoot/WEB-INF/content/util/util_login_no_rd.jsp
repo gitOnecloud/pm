@@ -123,7 +123,7 @@ a:hover {
 <script type="text/javascript" src="script/jquery.min.js"></script>
 <script type="text/javascript" src="script/baodian/util/rsa-encode.js"></script>
 <script type="text/javascript" src="script/jquery/jquery.encoding.digests.sha1.js"></script>
-<script type="text/javascript" src="script/baodian/util/util_login_no_rd.js"></script>
+<script type="text/javascript" src="script/baodian/util/common_login_no_rd.js"></script>
 
 <script type="text/javascript">
 var index_serverUrl = '<s:property value="casData.serverLoginUrl" escapeHtml="false"/>';

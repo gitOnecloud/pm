@@ -1,4 +1,4 @@
-﻿package com.baodian.action;
+﻿package com.baodian.action.user;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.util.Map;
@@ -9,6 +9,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.baodian.action.UtilAction;
 import com.baodian.model.user.User;
 import com.baodian.service.user.UserManager;
 import com.baodian.util.StaticMethod;
@@ -17,7 +18,7 @@ import com.baodian.util.page.UserPage;
 @SuppressWarnings("serial")
 @Component("user")
 @Scope("prototype")//必须注解为多态
-public class UserAction extends CommonAction implements SessionAware {
+public class UserAction extends UtilAction implements SessionAware {
 //依赖注入
 	@Resource(name="userManager")
 	private UserManager userManager;

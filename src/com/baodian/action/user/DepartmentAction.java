@@ -1,17 +1,18 @@
-﻿package com.baodian.action;
+﻿package com.baodian.action.user;
 
 import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.baodian.action.UtilAction;
 import com.baodian.model.user.Department;
 import com.baodian.service.user.DepartmentManager;
 
 @SuppressWarnings("serial")
 @Component("department")
 @Scope("prototype")//必须注解为多态
-public class DepartmentAction extends CommonAction {
+public class DepartmentAction extends UtilAction {
 //依赖注入
 	@Resource(name="departmentManager")
 	private DepartmentManager dm;

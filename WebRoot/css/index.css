@@ -666,3 +666,17 @@ span.usli_item {
 .index_input200 {
 	width: 200px;
 }
+.index_inputTable tr > td {
+	padding-bottom: 2px;
+}
+.index_inputTable tr > td:first-child {
+	padding-right: 5px;
+	text-align: right;
+}
+.index_inputTable tr > td:first-child > b {
+	color: red;
+	padding-right: 2px;
+}
+.index_inputTable input {
+	width: 200px;
+}

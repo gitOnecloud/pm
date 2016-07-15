@@ -1,0 +1,28 @@
+升级到2.5
+1、替换工程中的附件目录文件
+a.freemarker-2.3.23.jar
+b.log4j-api-2.5.jar
+c.log4j-core-2.5.jar，还需在classpath下增加log4j2.xml
+d.ognl-3.1.8.jar
+e.struts2-core-2.5.1.jar
+f.struts2-spring-plugin-2.5.1.jar
+g.struts2-json-plugin-2.5.1.jar
+h.struts2-config-browser-plugin-2.5.1.jar
+i.struts2-convention-plugin-2.5.1.jar
+
+2、删除原工程“xwork-core-2.3.16.jar”
+
+3、修改web.xml,把“<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>”
+修改成“<filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>”
+
+4、修改struts.xml，如果不使用DMI，设置<package strict-method-invocation="false">
+
+5、修改jsp的struts标签
+a.类似 <s:bean name="com.whb.common.DictItem" id="dictItem" />
+修改成 <s:bean name="com.whb.common.DictItem" var="dictItem" />
+
+b.类似<s:property value="result" escape="false"/>
+修改成 <s:property value="result" escapeHtml="false"/>
+
+
+

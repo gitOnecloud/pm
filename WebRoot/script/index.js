@@ -353,7 +353,7 @@ function index_changePW() {
 	//获取RSA公钥
 	var isError = false;
 	$.ajax({
-		url: 'util_rsaKey_no.action',
+		url: 'common_rsaKey_no.action',
 		cache: false,
 		async: false,
 		type: 'get',

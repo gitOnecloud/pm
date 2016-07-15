@@ -156,7 +156,7 @@ function usli_saveUser() {
 	//需要更新密码
 	if(password != '' ) {
 		$.ajax({
-			url: 'util_rsaKey_no.action',
+			url: 'common_rsaKey_no.action',
 			cache: false,
 			async: false,
 			type: 'get',

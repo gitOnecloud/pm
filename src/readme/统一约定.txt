@@ -16,9 +16,9 @@
   3）dao
   	接受service层的请求，从数据库读取数据，并返回
   	根据传入的参数组装sql语句，将读取的结果直接返回
-  	增加: UtilDao.save(obj)
-  	查找: UtilDao.find*()
-  	更改: update(obj)
+  	添加: UtilDao.save(obj)
+  	查询: UtilDao.find*()
+  	修改: update(obj)
   	删除: delete(id, obj)
   4）InitData
   	保存从配置文件读取的信息
@@ -37,6 +37,6 @@
 	生成密码
 	http://127.0.0.1:8080/sshdemo/user_makePassword.action?user.account=b051&user.password=142536
  	刷新配置
-	http://127.0.0.1:8080/sshdemo/util_rfall_rf.action
+	http://127.0.0.1:8080/sshdemo/common_rfall_rf.action
   
   

@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE struts PUBLIC 
-	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
-	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
 	<!-- <constant name="struts.devMode" value="true"></constant> -->
 	<constant name="struts.enable.DynamicMethodInvocation" value="false"></constant>
 	<constant name="struts.multipart.maxSize" value="314572800" />
 	
-	<package name="SSH_default" extends="struts-default">
+	<package name="SSH_default" extends="struts-default" strict-method-invocation="false">
+		<!-- <interceptors>自定义拦截器，用于捕获异常，未使用
+			<interceptor name="strutsCatchException" class="strutsCatchException" />
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="strutsCatchException" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myStack" /> -->
+		
 		<default-action-ref name="index_rd"/>
+		
 		<global-results>
 			<result name="success">/WEB-INF/content/{1}/{1}_{2}.jsp</result>
 			<result name="anyaction" type="redirectAction">${json}</result>
@@ -21,23 +31,21 @@
 			<result name="accessDenied">/message.jsp?json=deny</result>
 			<result name="mess">/message.jsp?json=${json}</result>
 			<result name="duplicate">/json.jsp?json={"status":1,"mess":"已经存在！"}</result>
-			<result name="nullpoint">/json.jsp?json={"status":1,"mess":"输入有误！"}</result>
-			<result name="sizeLimit">/json.jsp?json={"status":1,"mess":"输入有误！"}</result>
+			<result name="inputError">/json.jsp?json={"status":1,"mess":"输入有误！"}</result>
 			<result name="index">/WEB-INF/content/index.jsp</result>
 			<result name="admin">/WEB-INF/content/admin.jsp</result>
 		</global-results>
 		<global-exception-mappings>
 			<exception-mapping result="accessDenied" exception="org.springframework.security.access.AccessDeniedException"/>
 			<exception-mapping result="duplicate " exception="com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException"/>
-			<!-- 有用的
-				<exception-mapping result="nullpoint" exception="java.lang.NullPointerException"/>
-				<exception-mapping result="nullpoint" exception="java.lang.NumberFormatException"/>
-				<exception-mapping result="index" exception="java.lang.IndexOutOfBoundsException"/>
-				<exception-mapping result="index" exception="java.lang.NoSuchMethodException"/>
-			-->
+			<!-- <exception-mapping result="inputError" exception="java.lang.NullPointerException"/>
+			<exception-mapping result="inputError" exception="java.lang.NumberFormatException"/>
+			<exception-mapping result="inputError" exception="java.lang.IndexOutOfBoundsException"/>
+			<exception-mapping result="inputError" exception="java.lang.NoSuchMethodException"/> -->
 		</global-exception-mappings>
-		<action name="index_rd" class="util" method="index"></action>
-		<action name="admin_rd" class="util" method="admin"></action>
+		
+		<action name="index_rd" class="common" method="index"></action>
+		<action name="admin_rd" class="common" method="admin"></action>
 		<action name="file_*" class="file" method="{1}">
 			<result name="success">/WEB-INF/content/file/file_{1}.jsp</result>
 			<result name="input">/json.jsp?json={"status":1,"mess":"上传文件大小超过300M！"}</result>

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.baodian.util.page.Page;
 
 @Repository("utilDao")
-public abstract class UtilDao{
+public abstract class UtilDao {
 
 	@Resource(name="sessionFactory")
 	public SessionFactory sf;
@@ -205,5 +205,4 @@ public abstract class UtilDao{
 	public void delete(Object obj) {
 		sf.getCurrentSession().delete(obj);
 	}
-
 }

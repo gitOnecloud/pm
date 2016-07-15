@@ -7,14 +7,14 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.baodian.action.CommonAction;
+import com.baodian.action.UtilAction;
 import com.baodian.model.role.Authority;
 import com.baodian.service.role.AuthorityManager;
 
 @SuppressWarnings("serial")
 @Component("authority")
 @Scope("prototype")//必须注解为多态
-public class AuthorityAction extends CommonAction {
+public class AuthorityAction extends UtilAction {
 //依赖注入	
 	@Resource(name="authorityManager")
 	private AuthorityManager authorityManager;

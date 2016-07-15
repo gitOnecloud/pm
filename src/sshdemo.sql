@@ -63,13 +63,13 @@ INSERT INTO `authority` VALUES ('39', '0', '更改用户信息_js', 'user_change
 INSERT INTO `authority` VALUES ('40', '0', '删除用户_js', 'user_remove_js.action', '33', '10');
 INSERT INTO `authority` VALUES ('41', '0', '修改自己的密码_js', 'user_changePW_js.action', '33', '8');
 INSERT INTO `authority` VALUES ('43', '1', '权限角色', 'authority_role.action', '6', '27');
-INSERT INTO `authority` VALUES ('51', '1', '角色权限', 'util_refresh_rf.action', '79', '34');
-INSERT INTO `authority` VALUES ('52', '1', '权限菜单', 'util_rfmenu_rf.action', '79', '35');
+INSERT INTO `authority` VALUES ('51', '1', '角色权限', 'common_refresh_rf.action', '79', '34');
+INSERT INTO `authority` VALUES ('52', '1', '权限菜单', 'common_rfmenu_rf.action', '79', '35');
 INSERT INTO `authority` VALUES ('65', '1', '文件浏览', 'file_manager_rd.action', null, '37');
 INSERT INTO `authority` VALUES ('76', '0', '文件管理', '#', null, '0');
 INSERT INTO `authority` VALUES ('79', '1', '重载数据', '#', null, '32');
-INSERT INTO `authority` VALUES ('81', '1', '配置文件', 'util_rfdata_rf.action', '79', '36');
-INSERT INTO `authority` VALUES ('82', '1', '全部数据', 'util_rfall_rf.action', '79', '33');
+INSERT INTO `authority` VALUES ('81', '1', '配置文件', 'common_rfdata_rf.action', '79', '36');
+INSERT INTO `authority` VALUES ('82', '1', '全部数据', 'common_rfall_rf.action', '79', '33');
 INSERT INTO `authority` VALUES ('86', '1', '后台', 'admin_rd.action', null, '39');
 INSERT INTO `authority` VALUES ('87', '0', '下载文件', 'file_download_rd.action', '76', '1');
 INSERT INTO `authority` VALUES ('88', '0', '获取session', 'file_session_js.action', '76', '2');
